@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 280px;
+      padding: 16px;
+      font-family: Arial, sans-serif;
+      font-size: 14px;
+    }
+
+    .main-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      font-weight: bold;
+    }
+
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 24px;
+      background-color: #ccc;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .toggle-switch.enabled {
+      background-color: #bd006d;
+    }
+
+    .toggle-slider {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 20px;
+      height: 20px;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+
+    .toggle-switch.enabled .toggle-slider {
+      transform: translateX(26px);
+    }
+
+    .status-text {
+      font-size: 11px;
+      color: #666;
+      margin-bottom: 12px;
+    }
+
+    .options-section {
+      border-top: 1px solid #eee;
+      padding-top: 12px;
+      margin-bottom: 12px;
+    }
+
+    .field-label {
+      font-size: 12px;
+      margin-bottom: 4px;
+    }
+
+    .field-hint {
+      font-size: 10px;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="main-toggle">
+    <span>Enable Extension</span>
+    <div class="toggle-switch" id="toggleSwitch">
+      <div class="toggle-slider"></div>
+    </div>
+  </div>
+
+  <div class="status-text" id="statusText">Loading...</div>
+
+  <div class="options-section" id="optionsSection">
+    <div class="field-label">JIRA Base URL:</div>
+    <input type="text" id="jiraBaseUrl" placeholder="e.g., https://company.atlassian.net" style="width: 100%; padding: 4px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box;">
+    <div class="field-hint">Your JIRA Cloud instance URL</div>
+  </div>
+
+  <div class="options-section" id="mappingsSection">
+    <div class="field-label">Project mappings:</div>
+    <textarea id="projectMappings" placeholder="19195753 - WBNK&#10;12345678 - PROJ" style="width: 100%; height: 80px; padding: 4px; font-size: 11px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box; font-family: monospace; resize: vertical;"></textarea>
+    <div class="field-hint">Basecamp project ID - JIRA project key (one per line)</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

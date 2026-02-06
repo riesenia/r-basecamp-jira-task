@@ -1,0 +1,26 @@
+.jira-task-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-left: 6px;
+  background-color: #bd006d;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: opacity 0.2s ease;
+  opacity: 0.8;
+}
+
+.jira-task-btn:hover {
+  opacity: 1;
+}
+
+.jira-task-btn svg {
+  fill: white;
+  width: 14px;
+  height: 14px;
+  display: block;
+}

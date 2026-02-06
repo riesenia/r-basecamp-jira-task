@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Basecamp to JIRA Task Creator",
+  "version": "1.0.0",
+  "description": "Adds a JIRA button to Basecamp todo pages. Opens JIRA Create Issue dialog with pre-filled summary and description.",
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Basecamp to JIRA Task Creator"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.basecamp.com/*/projects/*/todos/*"],
+      "js": ["content-basecamp.js"],
+      "css": ["styles.css"]
+    },
+    {
+      "matches": ["https://*.atlassian.net/*"],
+      "js": ["content-jira.js"]
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}
