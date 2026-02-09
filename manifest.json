@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Basecamp to JIRA Task Creator",
-  "version": "1.0.0",
-  "description": "Adds a JIRA button to Basecamp todo pages. Opens JIRA Create Issue dialog with pre-filled summary and description.",
+  "version": "0.0.2",
+  "description": "Adds a JIRA button to Basecamp todo pages. Opens JIRA Create Issue dialog with pre-filled fields.",
   "permissions": ["storage"],
   "action": {
     "default_popup": "popup.html",

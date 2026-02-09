@@ -34,16 +34,8 @@ function processPendingTask() {
   });
 }
 
-// Run on initial load
+// Run on initial load only
 processPendingTask();
-
-// Also listen for storage changes (backup for SPA navigation / late tab load)
-chrome.storage.onChanged.addListener(function(changes) {
-  if (changes.pendingJiraTask && changes.pendingJiraTask.newValue) {
-    log('Detected new pending task via storage change');
-    processPendingTask();
-  }
-});
 
 function waitForJiraReady() {
   return new Promise(function(resolve) {
@@ -172,12 +164,23 @@ function openCreateDialog() {
 }
 
 function fillCreateForm(task) {
+  var delay = 0;
+
   // Select project first if we have a mapping
   if (task.jiraProjectKey) {
     selectProject(task.jiraProjectKey);
+    delay += 2000;
   }
 
-  // Fill summary after short delay (project change may re-render form)
+  // Select issue type after project (project change may reload type options)
+  if (task.issueType) {
+    setTimeout(function() {
+      selectIssueType(task.issueType);
+    }, delay);
+    delay += 2000;
+  }
+
+  // Fill summary after project + type selection
   setTimeout(function() {
     fillSummary(task.summary);
 
@@ -185,7 +188,7 @@ function fillCreateForm(task) {
     setTimeout(function() {
       fillExternalUrl(task.basecampUrl);
     }, 500);
-  }, task.jiraProjectKey ? 2000 : 0);
+  }, delay);
 }
 
 function fillSummary(summary) {
@@ -224,6 +227,34 @@ function selectProject(projectKey) {
       option.click();
     } else {
       log('No project option found after filtering');
+    }
+  }, 1000);
+}
+
+function selectIssueType(issueType) {
+  log('Selecting issue type: ' + issueType);
+
+  // Issue type picker has dynamic id starting with "type-picker-"
+  const typeInput = document.querySelector('input[id^="type-picker-"]');
+
+  if (!typeInput) {
+    log('Issue type input not found');
+    return;
+  }
+
+  log('Found issue type input: id="' + typeInput.id + '"');
+
+  typeInput.focus();
+  setNativeInputValue(typeInput, issueType);
+
+  // Wait for dropdown options to appear, then click the first match
+  setTimeout(function() {
+    const option = document.querySelector('[role="option"]');
+    if (option) {
+      log('Clicking issue type option: ' + option.textContent.trim());
+      option.click();
+    } else {
+      log('No issue type option found after filtering');
     }
   }, 1000);
 }
